@@ -53,7 +53,7 @@
     a { text-decoration: none; color: inherit; }
 
     /* ---------------- Layout ---------------- */
-    header { padding: 2rem 3rem; }
+    header { padding: 2rem 3rem; background: #ffffff; }
 
     .top-bar {
       display: flex;
@@ -72,9 +72,11 @@
       height: 22px;
       align-items: center;
       justify-content: center;
-      background: transparent;
+      background: #ffffff; /* white background behind the three lines */
       border: none;
       padding: 0;
+      border-radius: 6px;
+      box-shadow: 0 6px 18px rgba(12,20,40,0.06);
       -webkit-appearance: none;
     }
 
@@ -282,7 +284,9 @@
 
     /* ---------------- Mobile ---------------- */
     @media (max-width: 900px) {
-      header { padding: 1rem; }
+      header { padding: 1rem; position: fixed; top: 0; left: 0; right: 0; z-index: 1400; }
+      /* create space so content doesn't sit under the fixed header */
+      body { padding-top: 5.2rem; }
       header h1 { font-size: 3rem; }
 
       .work-wrapper {
@@ -337,6 +341,10 @@
         left: var(--menu-left);
         z-index: 99999;
         pointer-events: auto;
+        background: #ffffff;
+        padding: 6px;
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(12,20,40,0.08);
       }
     }
   </style>
