@@ -341,26 +341,26 @@
     .about-content p { font-size: 1.4rem; margin-bottom: 1rem; color: #1A2440; font-family: "ABC Walter Neue Light", -apple-system, BlinkMacSystemFont, sans-serif; }
 
     .photo-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
       gap: 0.9rem;
     }
+
+    .photo-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
     .photo {
       width: 100%;
       height: auto;
       border-radius: 12px;
-    }
-    .photo-me4 {
-      grid-column: 2;
-      grid-row: 2 / span 2;
-    }
-    .photo-me5 {
-      align-self: end;
+      display: block;
     }
 
     @media (max-width: 900px) {
       .about-inner { grid-template-columns: 1fr; grid-auto-flow: dense; }
-      .photo-grid { grid-template-columns: 1fr; justify-items: center; }
+      .photo-grid { flex-direction: column; align-items: center; }
       .photo { display: none !important; }
       .photo-me3 { display: block !important; width: 100%; }
       .about-photos { order: -1; }
@@ -422,7 +422,7 @@
 
   <div class="about-inner">
     <main class="about-content">
-      <h2>My name is Mia.</h2>
+      <h2>My name is Mia</h2>
       <p>I’m a creative designer based in New York City. I’m drawn to how things look, feel, and tell a story, whether that story lives in a digital product, a brand identity, a photograph, or something made by hand. </p>
 
       <p>I studied User Experience Design at the University of Michigan, where I developed a strong foundation in understanding how people interact with products, environments, and ideas. That way of thinking continues to guide my work and extends well beyond screens. </p>
@@ -437,11 +437,14 @@
 
     <aside class="about-photos">
       <div class="photo-grid">
-        <img src="images/about images/me-1.jpg" alt="Mia Schaftel portrait" class="photo photo-me1" />
-        <img src="images/about images/me-2.jpg" alt="Mia Schaftel portrait" class="photo photo-me2" />
-        <img src="images/about images/me-3.jpg" alt="Mia Schaftel portrait" class="photo photo-me3" />
-        <img src="images/about images/me-5.JPG" alt="Mia Schaftel portrait" class="photo photo-me5" />
-        <img src="images/about images/me-4.jpg" alt="Mia Schaftel portrait" class="photo photo-me4" />
+        <div class="photo-column">
+          <img src="images/about images/me-2.jpg" alt="Mia Schaftel portrait" class="photo photo-me1" />
+          <img src="images/about images/me-5.jpg" alt="Mia Schaftel portrait" class="photo photo-me3" />
+        </div>
+        <div class="photo-column">
+          <img src="images/about images/me-3.jpg" alt="Mia Schaftel portrait" class="photo photo-me2" />
+          <img src="images/about images/me-4.JPG" alt="Mia Schaftel portrait" class="photo photo-me5" />
+        </div>
       </div>
     </aside>
   </div>
