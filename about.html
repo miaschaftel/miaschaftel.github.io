@@ -211,8 +211,14 @@
       grid-template-columns: 180px 1fr;
       gap: 2.5rem;
       padding: 3rem 2rem 3rem 3rem;
+      align-items: start;
       flex: 1;
     }
+
+    /* Ensure sidebar nav and content column align to the same top */
+    .work-wrapper > aside { display: flex; flex-direction: column; justify-content: flex-start; }
+    .desktop-nav { margin-top: 0; padding-top: 0; }
+    .about-content { margin-top: 0; padding-top: 0; }
 
     nav {
       display: flex;
@@ -228,94 +234,6 @@
     nav a.active {
       /*border-bottom: 1px solid #97ABB1;*/
       font-family: "ABC Walter Neue Bold";
-    }
-
-    /* ---------------- Gallery ---------------- */
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.9rem;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
-    .project {
-      flex: 0 0 auto;
-    }
-
-    /* ---------- Hover Card ---------- */
-    .project-link {
-      position: relative;
-      display: inline-block;
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .project img {
-      height: 360px;
-      width: auto;
-      display: block;
-      border-radius: 16px;
-      transition: transform 0.35s ease;
-    }
-
-    /* Image loading placeholders (skeletons) */
-    .image-wrap { position: relative; display: block; }
-    .image-wrap img { opacity: 0; transition: opacity 360ms ease, transform 360ms ease; }
-    .image-wrap.image-loaded img { opacity: 1; }
-
-    .placeholder {
-      position: absolute;
-      inset: 0;
-      height: 360px;
-      width: 100%;
-      border-radius: 16px;
-      background: linear-gradient(90deg, #f3f4f6 0%, #eceff1 50%, #f3f4f6 100%);
-      background-size: 200% 100%;
-      animation: shimmer 1.2s linear infinite;
-      transition: opacity 260ms ease;
-    }
-    .placeholder.hidden { opacity: 0; pointer-events: none; }
-
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    /* Overlay */
-    .project-link::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.28);
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-
-    /* Title */
-    .project-title {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      font-family: "ABC Walter Neue Regular", sans-serif;
-      font-size: 1.35rem;
-      text-align: center;
-      padding: 0 1rem;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      pointer-events: none;
-    }
-
-    /* Hover state */
-    .project-link:hover::after,
-    .project-link:hover .project-title {
-      opacity: 1;
-    }
-
-    .project-link:hover img {
-      transform: scale(1.02);
     }
 
     /* ---------------- Mobile ---------------- */
@@ -345,30 +263,6 @@
       /* ensure mobile nav sits above other content */
       .mobile-nav { z-index: 1500; }
 
-      .gallery {
-        justify-content: center;
-        gap: 1rem;
-      }
-
-      .project {
-        width: 100%;
-        max-width: 640px;
-      }
-
-      .project img {
-        width: 100%;
-        height: auto;
-        border-radius: 12px;
-      }
-
-      .placeholder { height: auto; aspect-ratio: 16/9; border-radius: 12px; }
-
-      /* Always show title + overlay on mobile */
-      .project-link::after,
-      .project-title {
-        opacity: 1;
-      }
-
       /* Align the fixed close button to match the hamburger on mobile */
       .mobile-nav .close-nav { top: var(--menu-top); left: var(--menu-left); }
 
@@ -387,7 +281,8 @@
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 0 1.5rem;
-      padding: 2.5rem 2rem 4rem 3rem; /* left padding matches .work-wrapper */
+      grid-column: 1 / -1;
+      padding: 2.5rem 2rem 4rem 0;
       color: #97ABB1; /* same as nav link color */
       font-family: inherit;
       font-size: 0.95rem;
@@ -406,6 +301,37 @@
     @media (max-width: 900px) {
       .site-footer { grid-template-columns: 1fr; padding-left: 1rem; text-align: left; }
       .site-footer .footer-right { text-align: left; margin-top: 0.5rem; }
+    }
+
+    /* About page layout: left text (2/3) and right photo grid (1/3) */
+    .about-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      align-items: start;
+      align-self: start; /* ensure the about grid sits at top of the nav */
+    }
+
+    .about-content h2 { font-size: 3rem; margin: 0 0 1rem 0; color: #162A5F; font-weight: 10; font-family: "Cowboys 2.0" }
+    .about-content p { font-size: 1.2rem; margin-bottom: 1rem; color: #1A2440; font-family: "ABC Walter Neue Light", -apple-system, BlinkMacSystemFont, sans-serif; }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+    }
+    .photo {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #f3f4f6 0%, #eceff1 50%, #f3f4f6 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s linear infinite;
+    }
+
+    @media (max-width: 900px) {
+      .about-inner { grid-template-columns: 1fr; }
+      .photo-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -427,73 +353,39 @@
 <section class="work-wrapper">
   <aside>
     <nav class="desktop-nav">
-      <a class="active" href="index.html">Home</a>
+      <a href="index.html">Home</a>
       <a href="work.html">Work</a>
       <a href="life.html">Life</a>
-      <a href="about.html">About</a>
+      <a class="active" href="about.html">About</a>
     </nav>
   </aside>
 
-  <div class="gallery">
+  <div class="about-inner">
+    <main class="about-content">
+      <h2>ABOUT ME</h2>
+      <p>My name is Mia Schaftel. I'm a creative designer based out of New York City with 
+        experience across digital product design, user experience, branding, and photo/video.
+      </p>
+      <p>My work spans a variety of clients - from hospitality, consumer packaged goods, to financial technology.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+    </main>
 
-    <div class="project">
-      <a class="project-link" href="project-west-village.html">
-        <img src="images/west-village.jpg" alt="West Village street scene">
-        <span class="project-title">West Village</span>
-      </a>
-    </div>
-
-    <div class="project">
-      <a class="project-link" href="project-blair.html">
-        <img src="images/blair.jpg" alt="Portrait of Blair">
-        <span class="project-title">Blair</span>
-      </a>
-    </div>
-
-    <div class="project">
-      <a class="project-link" href="project-signs.html">
-        <img src="images/signs-parcelle.jpg" alt="Parcelle sign">
-        <span class="project-title">Signs</span>
-      </a>
-    </div>
-
-    <div class="project">
-      <a class="project-link" href="project-cherry-lane.html">
-        <img src="images/cherry-lane.jpg" alt="Cherry Lane Theater">
-        <span class="project-title">Cherry Lane Theater</span>
-      </a>
-    </div>
-
-    <div class="project">
-      <a class="project-link" href="project-gilda.html">
-        <img src="images/gilda.jpg" alt="Gilda">
-        <span class="project-title">Gilda</span>
-      </a>
-    </div>
-
-    <div class="project">
-      <a class="project-link" href="project-mirror.html">
-        <img src="images/mirror.jpg" alt="Mirror portrait">
-        <span class="project-title">Me in the Mirror</span>
-      </a>
-    </div>
-
-    <div class="project">
-      <a class="project-link" href="project-cherry-lane.html">
-        <img src="images/blair-2.jpg" alt="Blair at Cherry Lane">
-        <span class="project-title">Blair at Cherry Lane</span>
-      </a>
-    </div>
-
+    <aside class="about-photos">
+      <div class="photo-grid">
+        <div class="photo placeholder-photo"></div>
+        <div class="photo placeholder-photo"></div>
+        <div class="photo placeholder-photo"></div>
+        <div class="photo placeholder-photo"></div>
+      </div>
+    </aside>
   </div>
-</section>
 
   <nav class="mobile-nav" id="mobileNav" aria-hidden="true">
     <button class="close-nav" id="closeNav" aria-label="Close menu"></button>
-    <a class="active" href="index.html">Home</a>
+    <a href="index.html">Home</a>
     <a href="work.html">Work</a>
     <a href="life.html">Life</a>
-    <a href="about.html">About</a>
+    <a class="active" href="about.html">About</a>
   </nav>
 
   <script>
