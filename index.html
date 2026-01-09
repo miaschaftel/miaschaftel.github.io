@@ -44,6 +44,12 @@
       font-size: 1rem;
     }
 
+    /* coordinates for menu toggle (hamburger / close) - tuned for mobile */
+    :root {
+      --menu-left: 2rem; /* align with mobile nav left padding */
+      --menu-top: 2rem;  /* vertical center relative to header on mobile */
+    }
+
     a { text-decoration: none; color: inherit; }
 
     /* ---------------- Layout ---------------- */
@@ -57,6 +63,7 @@
     }
 
     .hamburger {
+      /* Hidden on desktop; only show via mobile media query */
       display: none;
       flex-direction: column;
       gap: 6px;
@@ -65,12 +72,16 @@
       height: 22px;
       align-items: center;
       justify-content: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      -webkit-appearance: none;
     }
 
     .hamburger span {
       width: 20px;
       height: 2px;
-      background: #1A2440;
+      background: #97ABB1; /* match header color */
       display: block;
       border-radius: 2px;
       transition: transform 300ms cubic-bezier(.2,.9,.2,1), opacity 200ms ease, background 200ms ease;
@@ -135,28 +146,50 @@
       width: 220px;
       background: #ffffff;
       padding: 6rem 2rem 2rem;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-      z-index: 1000;
+      transform: translateX(-110%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.28s ease, opacity 0.2s ease;
+      z-index: 1200;
     }
 
-    .mobile-nav.open { transform: translateX(0); }
+    .mobile-nav.open { transform: translateX(0); opacity: 1; pointer-events: auto; }
 
     /* Close button inside mobile nav, visible only when open */
     .mobile-nav .close-nav {
       display: none;
-      position: absolute;
-      top: 14px;
-      right: 14px;
+      position: fixed !important; /* position relative to viewport to match hamburger */
+      top: var(--menu-top) !important; /* align with header padding (desktop) */
+      left: var(--menu-left) !important; /* match header left padding so X sits where hamburger is */
+      width: 20px;
+      height: 20px;
       background: transparent;
       border: none;
-      font-size: 1.6rem;
-      line-height: 1;
+      padding: 0;
       cursor: pointer;
-      padding: 6px;
-      color: #162A5F;
+      z-index: 9999 !important;
     }
-    .mobile-nav.open .close-nav { display: block; }
+    .mobile-nav .close-nav::before,
+    .mobile-nav .close-nav::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 20px;
+      height: 2px;
+      background: #97ABB1; /* match header color */
+      border-radius: 2px;
+      transform-origin: center;
+      transition: transform 300ms cubic-bezier(.2,.9,.2,1), opacity 200ms ease;
+    }
+    .mobile-nav .close-nav::before { transform: translateY(-50%) rotate(45deg); }
+    .mobile-nav .close-nav::after { transform: translateY(-50%) rotate(-45deg); }
+     .mobile-nav.open .close-nav { display: block; }
+
+     /* hide the header hamburger visuals while the close button is shown to avoid duplicate visuals,
+       but keep the button in the layout so the header doesn't shift */
+     .hamburger.open span { opacity: 0; }
+     .hamburger.open { pointer-events: none; }
 
     /* ---------------- Work Layout ---------------- */
     .work-wrapper {
@@ -250,14 +283,27 @@
     /* ---------------- Mobile ---------------- */
     @media (max-width: 900px) {
       header { padding: 1rem; }
-      header h1 { font-size: 2rem; }
+      header h1 { font-size: 3rem; }
 
       .work-wrapper {
         grid-template-columns: 1fr;
         padding: 1.5rem 1rem;
       }
 
-      nav { display: none; }
+      .desktop-nav { display: none; }
+      .hamburger { display: flex !important; }
+      /* add spacing so header title doesn't sit under the hamburger */
+      header .top-bar a { margin-left: calc(var(--menu-left) + 1.5rem); }
+      /* position the hamburger at the menu coords on mobile */
+      .hamburger {
+        position: fixed;
+        top: var(--menu-top);
+        left: var(--menu-left);
+        z-index: 1600;
+      }
+
+      /* ensure mobile nav sits above other content */
+      .mobile-nav { z-index: 1500; }
 
       .gallery {
         justify-content: center;
@@ -280,11 +326,29 @@
       .project-title {
         opacity: 1;
       }
+
+      /* Align the fixed close button to match the hamburger on mobile */
+      .mobile-nav .close-nav { top: var(--menu-top); left: var(--menu-left); }
+
+      /* Portal for fixed hamburger on mobile to avoid scrolling issues */
+      #menu-portal {
+        position: fixed;
+        top: var(--menu-top);
+        left: var(--menu-left);
+        z-index: 99999;
+        pointer-events: auto;
+      }
     }
   </style>
 </head>
 
 <body>
+
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
 <header>
   <div class="top-bar">
@@ -294,7 +358,7 @@
 
 <section class="work-wrapper">
   <aside>
-    <nav>
+    <nav class="desktop-nav">
       <a class="active" href="#">Home</a>
       <a href="#">Work</a>
       <a href="#">Life</a>
@@ -355,6 +419,73 @@
 
   </div>
 </section>
+
+  <nav class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <button class="close-nav" id="closeNav" aria-label="Close menu"></button>
+    <a class="active" href="#">Home</a>
+    <a href="#">Work</a>
+    <a href="#">Life</a>
+    <a href="#">About</a>
+  </nav>
+
+  <script>
+    // Mobile nav toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    const closeNav = document.getElementById('closeNav');
+
+    function setNavOpen(open) {
+      if (open) {
+        mobileNav.classList.add('open');
+        mobileNav.setAttribute('aria-hidden', 'false');
+        hamburger.classList.add('open');
+        hamburger.setAttribute('aria-expanded', 'true');
+      } else {
+        mobileNav.classList.remove('open');
+        mobileNav.setAttribute('aria-hidden', 'true');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    if (hamburger) {
+      hamburger.addEventListener('click', () => setNavOpen(!mobileNav.classList.contains('open')));
+    }
+    if (closeNav) {
+      closeNav.addEventListener('click', () => setNavOpen(false));
+    }
+
+    // Ensure hamburger lives in a fixed portal on mobile so it never scrolls.
+    (function ensureMenuPortal() {
+      function setup() {
+        const hb = document.getElementById('hamburger');
+        if (!hb) return;
+        let portal = document.getElementById('menu-portal');
+        if (!portal) {
+          portal = document.createElement('div');
+          portal.id = 'menu-portal';
+          document.body.appendChild(portal);
+        }
+
+        const isMobile = window.matchMedia('(max-width: 900px)').matches;
+        if (isMobile) {
+          if (hb.parentNode !== portal) portal.appendChild(hb);
+          // sync portal position to CSS vars
+          const root = getComputedStyle(document.documentElement);
+          portal.style.top = root.getPropertyValue('--menu-top') || '2rem';
+          portal.style.left = root.getPropertyValue('--menu-left') || '2rem';
+          portal.style.position = 'fixed';
+        } else {
+          // move hamburger back into the header top-bar when not mobile
+          const topBar = document.querySelector('header .top-bar');
+          if (topBar && hb.parentNode !== topBar) topBar.insertBefore(hb, topBar.firstChild);
+        }
+      }
+
+      setup();
+      window.addEventListener('resize', setup);
+    })();
+  </script>
 
 </body>
 </html>
