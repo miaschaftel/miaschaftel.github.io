@@ -313,7 +313,7 @@
     }
 
     .about-content h2 { font-size: 3rem; margin: 0 0 1rem 0; color: #162A5F; font-weight: 10; font-family: "Cowboys 2.0" }
-    .about-content p { font-size: 1.2rem; margin-bottom: 1rem; color: #1A2440; font-family: "ABC Walter Neue Light", -apple-system, BlinkMacSystemFont, sans-serif; }
+    .about-content p { font-size: 1.4rem; margin-bottom: 1rem; color: #1A2440; font-family: "ABC Walter Neue Light", -apple-system, BlinkMacSystemFont, sans-serif; }
 
     .photo-grid {
       display: grid;
@@ -322,11 +322,12 @@
     }
     .photo {
       width: 100%;
-      aspect-ratio: 4 / 3;
+      height: auto;
       border-radius: 12px;
-      background: linear-gradient(90deg, #f3f4f6 0%, #eceff1 50%, #f3f4f6 100%);
-      background-size: 200% 100%;
-      animation: shimmer 1.2s linear infinite;
+    }
+    .photo-me4 {
+      grid-column: 2;
+      grid-row: 2 / span 2;
     }
 
     @media (max-width: 900px) {
@@ -354,8 +355,8 @@
   <aside>
     <nav class="desktop-nav">
       <a href="index.html">Home</a>
-      <a href="work.html">Work</a>
-      <a href="life.html">Life</a>
+      <!-- <a href="work.html">Work</a> -->
+      <!-- <a href="life.html">Life</a> -->
       <a class="active" href="about.html">About</a>
     </nav>
   </aside>
@@ -363,19 +364,24 @@
   <div class="about-inner">
     <main class="about-content">
       <h2>ABOUT ME</h2>
-      <p>My name is Mia Schaftel. I'm a creative designer based out of New York City with 
-        experience across digital product design, user experience, branding, and photo/video.
-      </p>
-      <p>My work spans a variety of clients - from hospitality, consumer packaged goods, to financial technology.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+      <p>My name is Mia Schaftel, and I’m a creative designer based in New York City. I’m drawn to how things look, feel, and tell a story, whether that story lives in a digital product, a brand identity, a photograph, or something made by hand. </p>
+
+      <p>I studied User Experience Design at the University of Michigan, where I developed a strong foundation in understanding how people interact with products, environments, and ideas. That way of thinking continues to guide my work and extends well beyond screens. </p>
+
+      <p>I’ve worked across industries including luxury fashion retail, global hospitality, consumer goods, and financial technology, collaborating with teams to shape thoughtful, visually driven experiences. Alongside client work, I spend much of my time exploring creativity through photography, embroidery, jewelry making, painting, writing, and video. These hands-on practices influence how I approach every project, helping me design with intention, curiosity, and a strong point of view.</p>
+
+      <p>I’m most energized when I can explore different creative practices to authentically bring ideas to life.</p>
+
+      <p>Feel free to reach out at <a href="mailto:miaschaftelbusiness@gmail.com">miaschaftelbusiness@gmail.com</a></p>
     </main>
 
     <aside class="about-photos">
       <div class="photo-grid">
-        <div class="photo placeholder-photo"></div>
-        <div class="photo placeholder-photo"></div>
-        <div class="photo placeholder-photo"></div>
-        <div class="photo placeholder-photo"></div>
+        <img src="images/about images/me-1.jpg" alt="Mia Schaftel portrait" class="photo photo-me1" />
+        <img src="images/about images/me-2.jpg" alt="Mia Schaftel portrait" class="photo photo-me2" />
+        <img src="images/about images/me-3.jpg" alt="Mia Schaftel portrait" class="photo photo-me3" />
+        <img src="images/about images/me-5.jpg" alt="Mia Schaftel portrait" class="photo photo-me5" />
+        <img src="images/about images/me-4.jpg" alt="Mia Schaftel portrait" class="photo photo-me4" />
       </div>
     </aside>
   </div>
