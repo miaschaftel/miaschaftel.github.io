@@ -255,6 +255,29 @@
       transition: transform 0.35s ease;
     }
 
+    /* Image loading placeholders (skeletons) */
+    .image-wrap { position: relative; display: block; }
+    .image-wrap img { opacity: 0; transition: opacity 360ms ease, transform 360ms ease; }
+    .image-wrap.image-loaded img { opacity: 1; }
+
+    .placeholder {
+      position: absolute;
+      inset: 0;
+      height: 360px;
+      width: 100%;
+      border-radius: 16px;
+      background: linear-gradient(90deg, #f3f4f6 0%, #eceff1 50%, #f3f4f6 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s linear infinite;
+      transition: opacity 260ms ease;
+    }
+    .placeholder.hidden { opacity: 0; pointer-events: none; }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
     /* Overlay */
     .project-link::after {
       content: "";
@@ -334,6 +357,8 @@
         border-radius: 12px;
       }
 
+      .placeholder { height: auto; aspect-ratio: 16/9; border-radius: 12px; }
+
       /* Always show title + overlay on mobile */
       .project-link::after,
       .project-title {
@@ -351,6 +376,32 @@
         z-index: 99999;
         pointer-events: auto;
       }
+    }
+
+    /* Footer styling — two-column footer that pairs left and right lines */
+    .site-footer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0 1.5rem;
+      padding: 2.5rem 2rem 4rem 3rem; /* left padding matches .work-wrapper */
+      color: #97ABB1; /* same as nav link color */
+      font-family: inherit;
+      font-size: 0.95rem;
+      align-items: start;
+    }
+
+    .site-footer .footer-left div,
+    .site-footer .footer-right div {
+      line-height: 1.4;
+    }
+
+    .site-footer .footer-right {
+      text-align: right;
+    }
+
+    @media (max-width: 900px) {
+      .site-footer { grid-template-columns: 1fr; padding-left: 1rem; text-align: left; }
+      .site-footer .footer-right { text-align: left; margin-top: 0.5rem; }
     }
   </style>
 </head>
@@ -498,7 +549,54 @@
       setup();
       window.addEventListener('resize', setup);
     })();
+
+    // Insert placeholders and fade images in as they load
+    (function setupImagePlaceholders() {
+      const imgs = Array.from(document.querySelectorAll('.project img'));
+      imgs.forEach(img => {
+        // create wrap only if not already wrapped
+        if (!img.parentElement.classList.contains('image-wrap')) {
+          const wrap = document.createElement('div');
+          wrap.className = 'image-wrap';
+          img.parentNode.insertBefore(wrap, img);
+          wrap.appendChild(img);
+
+          const placeholder = document.createElement('div');
+          placeholder.className = 'placeholder';
+          wrap.appendChild(placeholder);
+
+          function markLoaded() {
+            wrap.classList.add('image-loaded');
+            placeholder.classList.add('hidden');
+          }
+
+          if (img.complete && img.naturalWidth !== 0) {
+            // already cached
+            markLoaded();
+          } else {
+            img.addEventListener('load', markLoaded);
+            img.addEventListener('error', () => {
+              // on error, hide placeholder so user sees fallback
+              placeholder.classList.add('hidden');
+            });
+          }
+        }
+      });
+    })();
   </script>
+
+  <footer class="site-footer">
+    <div class="footer-left">
+      <div>2026</div>
+      <div>New York City</div>
+      <div>Mia Schaftel</div>
+    </div>
+    <div class="footer-right">
+      <div>Creative.</div>
+      <div>Storyteller.</div>
+      <div>&lt;3</div>
+    </div>
+  </footer>
 
 </body>
 </html>
