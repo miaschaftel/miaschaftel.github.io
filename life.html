@@ -49,6 +49,9 @@
       line-height: 1.5;
       font-weight: 400;
       font-size: 1rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     /* coordinates for menu toggle (hamburger / close) - tuned for mobile */
@@ -208,6 +211,7 @@
       grid-template-columns: 180px 1fr;
       gap: 2.5rem;
       padding: 3rem 2rem 3rem 3rem;
+      flex: 1;
     }
 
     nav {
@@ -271,7 +275,8 @@
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 0 1.5rem;
-      padding: 2.5rem 2rem 4rem 3rem; /* left padding matches .work-wrapper */
+      grid-column: 1 / -1;
+      padding: 2.5rem 2rem 4rem 0;
       color: #97ABB1; /* same as nav link color */
       font-family: inherit;
       font-size: 0.95rem;
