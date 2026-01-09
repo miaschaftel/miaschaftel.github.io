@@ -72,11 +72,11 @@
       height: 22px;
       align-items: center;
       justify-content: center;
-      background: #ffffff; /* white background behind the three lines */
+      background: transparent; /* no white background */
       border: none;
       padding: 0;
-      border-radius: 6px;
-      box-shadow: 0 6px 18px rgba(12,20,40,0.06);
+      border-radius: 0;
+      box-shadow: none;
       -webkit-appearance: none;
     }
 
@@ -341,10 +341,6 @@
         left: var(--menu-left);
         z-index: 99999;
         pointer-events: auto;
-        background: #ffffff;
-        padding: 6px;
-        border-radius: 8px;
-        box-shadow: 0 8px 24px rgba(12,20,40,0.08);
       }
     }
   </style>
