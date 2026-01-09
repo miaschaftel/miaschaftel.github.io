@@ -329,10 +329,41 @@
       grid-column: 2;
       grid-row: 2 / span 2;
     }
+    .photo-me5 {
+      align-self: end;
+    }
 
     @media (max-width: 900px) {
       .about-inner { grid-template-columns: 1fr; }
       .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Image placeholder and fade-in styles */
+    .image-wrap {
+      position: relative;
+      overflow: hidden;
+      display: contents;
+    }
+    .image-wrap img {
+      display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .image-wrap.image-loaded img {
+      opacity: 1;
+    }
+    .placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #f3f4f6 0%, #eceff1 50%, #f3f4f6 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s linear infinite;
+    }
+    .placeholder.hidden {
+      display: none;
     }
   </style>
 </head>
@@ -454,7 +485,7 @@
 
     // Insert placeholders and fade images in as they load
     (function setupImagePlaceholders() {
-      const imgs = Array.from(document.querySelectorAll('.project img'));
+      const imgs = Array.from(document.querySelectorAll('.project img, .photo'));
       imgs.forEach(img => {
         // create wrap only if not already wrapped
         if (!img.parentElement.classList.contains('image-wrap')) {
