@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mia Schaftel — People, Places, Good Nights</title>
+  <link rel="icon" href="./favicon.png" />
+
+  <!-- CRITICAL: stylesheet path must match file location -->
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+  <header class="nav">
+    <div class="container nav-inner">
+    <a class="brand brand-stamp" href="./index.html">Mia Schaftel</a>
+
+      <nav class="nav-links">
+        <a class="active" href="./index.html">Home</a>
+        <a href="./work.html">Work</a>
+        <a href="./about.html">About</a>
+        <!--<a href="mailto: miaschaftelbusiness@gmail.com">Say Hello</a>-->
+      </nav>
+    </div>
+  </header>
+
+  <main class="hero home-main">
+    <div class="container">
+      <section class="hero-card">
+        <img src="./images/hero.jpg" alt="A memory in motion" />
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+          <div class="kicker">People • Places • Experiences</div>
+          <h1 class="h1">Life is better when it’s shared.</h1>
+          <!--<p class="subhead">
+            A sun-faded, snow-dusted world of retro glamour, real connection, and moments that feel lived in.
+          </p>-->
+
+          <div class="actions">
+            <a class="btn btn-primary" href="./work.html">View My Work</a>
+            <a class="btn btn-ghost" href="./about.html">A Little Introduction</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="section home-tiles">
+      <div class="container">
+        <div class="meta-row">
+          <div>
+            <h2 class="h2">A few scenes</h2>
+            <!--<p class="muted">Nostalgia, but make it now.</p>-->
+          </div>
+          <a href="./work.html">Explore →</a>
+        </div>
+
+        <div class="grid grid-3">
+          <a class="tile" href="./work.html">
+            <img src="./images/tile-1.jpg" alt="Sunday Shopping" />
+            <div class="tile-title"><span>Sunday Shopping</span></div>
+          </a>
+
+          <a class="tile" href="./work.html">
+            <img src="./images/tile-2.jpg" alt="A Trip to Chinatown" />
+            <div class="tile-title"><span>A Trip to Chinatown</span></div>
+          </a>
+
+          <a class="tile" href="./work.html">
+            <img src="./images/tile-3.jpg" alt="Family Dinner" />
+            <div class="tile-title"><span>Family Dinner</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="hr" />
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="prose">
+          <p class="lead">I’m inspired by people and the connections that happen when things feel relaxed and unforced.</p>
+          <p>
+            My work lives at the intersection of nostalgia and now — inspired by
+            the feeling of dinner table conversations, a night out with friends, and the energy that happens
+            when people feel comfortable being themselves.
+          </p>
+          <div class="pull">
+            Pull up a chair. Say hello.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> Mia Schaftel · New York City</div>
+      <div><a href="./contact.html">Say hello →</a></div>
+    </div>
+  </footer>
+
+  <script src="./main.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

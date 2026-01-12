@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Work — Mia Schaftel</title>
+        <link rel="icon" href="./favicon.png" />
+        <link rel="stylesheet" href="./styles.css" />
+    </head>
+    <body>
+        <header class="nav">
+            <div class="container nav-inner">
+            <a class="brand" href="./index.html">Mia Schaftel</a>
+
+            <nav class="nav-links">
+                <a href="./index.html">Home</a>
+                <a class="active" href="./work.html">Work</a>
+                <a href="./about.html">About</a>
+                <!-- <a href="mailto: miaschaftelbusiness@gmail.com">Say Hello</a> -->
+            </nav>
+            </div>
+        </header>
+
+        <main class="section work-main">
+            <div class="container">
+            <div class="meta-row">
+                <div>
+                <h1 class="h1" style="color: rgba(28,42,58,0.92);">Work</h1>
+                <!--<p class="muted">Projects, stories, and experiences. Less pitch — more feeling.</p>-->
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <!--<div class="filters" aria-label="Work filters">
+                <button class="chip is-active" data-filter="all" type="button">All</button>
+                <button class="chip" data-filter="city" type="button">City</button>
+                <button class="chip" data-filter="beach" type="button">Beach</button>
+                <button class="chip" data-filter="Ski" type="button">Ski</button>
+                <button class="chip" data-filter="people" type="button">People</button>
+                <button class="chip" data-filter="Night" type="button">Night</button>
+            </div> -->
+
+            <div class="grid grid-3" style="position: relative;">
+                <a class="tile work-item" data-tags="people,city" href="#">
+                <img src="./images/work/work-1.jpg" alt="Magazine Shop" />
+                <div class="tile-title"><span>Sunday Shopping</span></div>
+                </a>
+
+                <a class="tile work-item" data-tags="people,city" href="#">
+                <img src="./images/work/work-2.jpg" alt="Chinatown Trip" />
+                <div class="tile-title"><span>Trip to Chinatown</span></div>
+                </a>
+
+                <a class="tile work-item" data-tags="city,people" href="#">
+                <img src="./images/work/work-3.jpg" alt="Coffee Walk" />
+                <div class="tile-title"><span>Coffee Walk</span></div>
+                </a>
+
+                <a class="tile work-item" data-tags="city" href="#">
+                <img src="./images/work/work-4.jpg" alt="West Village" />
+                <div class="tile-title"><span>West Village</span></div>
+                </a>
+
+                <a class="tile work-item" data-tags="people" href="#">
+                <img src="./images/work/work-5.jpg" alt="At Home Photo Booth" />
+                <div class="tile-title"><span>Photo Booth @ Home</span></div>
+                </a>
+
+                <a class="tile work-item" data-tags="beach" href="#">
+                <img src="./images/work/work-6.jpg" alt="Day at the Beach" />
+                <div class="tile-title"><span>Day at the Beach</span></div>
+                </a>
+            </div>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container footer-inner">
+            <div>© <span id="year"></span> Mia Schaftel · New York City</div>
+            <div><a href="./contact.html">Say hello →</a></div>
+            </div>
+        </footer>
+
+        <script src="./main.js"></script>
+        <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+    </body>
+</html>
