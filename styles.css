@@ -113,6 +113,16 @@ body::before{
   background:rgba(238,243,246,0.80);
   border-bottom:1px solid var(--hairline);
 }
+.nav::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:calc(-1 * env(safe-area-inset-top));
+  height:env(safe-area-inset-top);
+  background:inherit;
+  backdrop-filter:inherit;
+}
 .nav-inner{
   display:flex;
   align-items:center;
