@@ -124,6 +124,8 @@ body::after{
   backdrop-filter:blur(14px);
   background:rgba(238,243,246,0.80);
   border-bottom:1px solid var(--hairline);
+  padding-top:env(safe-area-inset-top);
+  margin-top:calc(-1 * env(safe-area-inset-top));
 }
 .nav::before{
   content:"";
