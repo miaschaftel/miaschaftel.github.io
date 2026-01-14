@@ -1,5 +1,15 @@
 // Page fade-in
 window.addEventListener("DOMContentLoaded", () => {
+  // Fixed header: offset page content by nav height.
+  const nav = document.querySelector(".nav");
+  if (nav) {
+    const setNavOffset = () => {
+      document.body.style.paddingTop = `${nav.offsetHeight}px`;
+    };
+    setNavOffset();
+    window.addEventListener("resize", setNavOffset);
+  }
+
   document.body.classList.add("is-loaded");
 
   // Work filters (only runs if filter UI exists)
