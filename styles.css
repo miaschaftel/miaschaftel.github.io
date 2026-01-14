@@ -206,6 +206,95 @@ body::before{
 .h1{font-family:var(--font-sans-strong);font-size:clamp(28px,4vw,32px);letter-spacing:.2px;line-height:1.05;margin:0}
 .subhead{font-size:clamp(16px,2vw,18px);line-height:1.45;margin:0;color:rgba(246,241,231,0.90);max-width:58ch}
 
+/* Project hero (no hover/overlay, rounded like home hero) */
+.project-hero{
+  display:block;
+  border-radius:calc(var(--radius) + 10px);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  background:#cfdde7;
+}
+.project-hero::after{display:none}
+.project-hero img{
+  width:100%;
+  height:520px;
+  object-fit:cover;
+  filter:saturate(.98) contrast(.98);
+  transform:none;
+}
+.project-hero:hover img{
+  transform:none;
+  filter:saturate(.98) contrast(.98);
+}
+
+/* Project page section spacing */
+.project-page .project-spotify-section{padding-top:20px}
+.project-page .project-hero-section{padding-top:20px}
+.project-page .project-overview-section{padding-top:32px}
+
+/* Project page only: disable tile hover interactions */
+.project-page .tile:hover img{transform:none;filter:none}
+.project-page .tile:hover::after{background:rgba(28,42,58,0)}
+.project-page .tile:hover .tile-title{opacity:0}
+
+/* Project page modal */
+.image-modal{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:rgba(19,27,38,0.72);
+  z-index:200;
+}
+.image-modal.is-open{display:flex}
+.image-modal .modal-content{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+.image-modal .modal-image-wrap{
+  position:relative;
+  display:inline-block;
+}
+.image-modal img{
+  max-width:min(92vw, 1200px);
+  max-height:88vh;
+  width:auto;
+  height:auto;
+  border-radius:18px;
+  box-shadow:0 18px 40px rgba(0,0,0,0.35);
+  background:#cfdde7;
+}
+.image-modal .close{
+  position:absolute;
+  top:-40px;
+  right:-40px;
+  z-index:2;
+  width:42px;
+  height:42px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.35);
+  background:rgba(255,255,255,0.16);
+  color:#fff;
+  font-size:20px;
+  line-height:1;
+  cursor:pointer;
+}
+.image-modal .modal-nav{
+  width:44px;
+  height:44px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.35);
+  background:rgba(255,255,255,0.16);
+  color:#fff;
+  font-size:22px;
+  line-height:1;
+  cursor:pointer;
+}
+body.modal-open{overflow:hidden}
+
 /* Buttons */
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
 .btn{
@@ -225,6 +314,12 @@ body::before{
   background:rgba(28,42,58,0.12);
   border:1px solid rgba(246,241,231,0.28);
   color:rgba(246,241,231,0.92);
+}
+
+.btn-secondary{
+  background:rgba(28,42,58,0.22);
+  border:1px solid rgba(246,241,231,0.28);
+  color:#ffffff;
 }
 
 /* Prose */
@@ -279,12 +374,13 @@ body::before{
   .brand{font-size:64px;width:100%; padding: 10px 0 20px 0;}
   .nav-links{gap:10px;flex-wrap:wrap;width:100%;justify-content:center}
   .nav-links a{font-size:14px;letter-spacing:.4px;}
-  .nav{padding: 0 0 10px 0;}
+  .nav{position:sticky;top:0;z-index:200;padding: 0 0 10px 0;}
   .work-main{padding-top:32px;padding-bottom:30px}
   .work-main + .site-footer{margin-top:0}
   .home-main .section--tight{padding-top:30px;padding-bottom:35px}
   .home-tiles{padding-bottom:35px}
   .home-main + .site-footer{margin-top:10px}
+  .project-hero img{ height: 360px !important; }
 }
 
 /* About layout: make prose column much wider */
@@ -299,6 +395,11 @@ body::before{
   box-shadow:0 10px 26px rgba(0,0,0,0.07);
   transform:translateZ(0);
 }
+
+.tile-project-arrow{
+  background:rgba(28,42,58,0.12);
+}
+
 .tile img{
   width:100%;
   height:340px;
@@ -405,3 +506,13 @@ textarea{min-height:140px;resize:vertical}
   padding-bottom:2px;
 }
 .site-footer a:hover{border-bottom-color:rgba(74,143,184,0.55)}
+
+
+/* Spotify embed */
+.spotify-embed {
+  max-width: 100%;
+}
+
+.spotify-embed iframe {
+  border-radius: 12px;
+}
