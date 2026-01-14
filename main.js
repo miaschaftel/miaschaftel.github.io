@@ -51,4 +51,123 @@ window.addEventListener("DOMContentLoaded", () => {
       }, 280);
     });
   });
+
+  // Project modal (gallery + hero; only runs if modal exists)
+  const modal = document.getElementById("image-modal");
+  if (modal) {
+    const modalImg = modal.querySelector("img");
+    const closeBtn = modal.querySelector(".close");
+    const galleryLinks = document.querySelectorAll("#gallery .tile");
+    const heroLink = document.querySelector(".project-hero-modal");
+    const prevBtn = modal.querySelector(".modal-prev");
+    const nextBtn = modal.querySelector(".modal-next");
+    const items = [];
+    let currentIndex = 0;
+
+    const heroImg = heroLink ? heroLink.querySelector("img") : null;
+    if (heroLink) {
+      items.push({
+        src: heroLink.getAttribute("href"),
+        alt: heroImg ? heroImg.alt : ""
+      });
+    }
+    galleryLinks.forEach((link) => {
+      const img = link.querySelector("img");
+      items.push({
+        src: link.getAttribute("href"),
+        alt: img ? img.alt : ""
+      });
+    });
+
+    const setModalImage = (index) => {
+      if (!modalImg || !items.length) return;
+      const safeIndex = (index + items.length) % items.length;
+      currentIndex = safeIndex;
+      modalImg.src = items[safeIndex].src;
+      modalImg.alt = items[safeIndex].alt || "";
+    };
+
+    const openModalAt = (index) => {
+      if (!items.length) return;
+      setModalImage(index);
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      if (prevBtn && nextBtn) {
+        const showNav = items.length > 1;
+        prevBtn.style.display = showNav ? "" : "none";
+        nextBtn.style.display = showNav ? "" : "none";
+      }
+    };
+
+    const closeModal = () => {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      if (modalImg) {
+        modalImg.src = "";
+        modalImg.alt = "";
+      }
+    };
+
+    galleryLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        const src = link.getAttribute("href");
+        const index = items.findIndex((item) => item.src === src);
+        openModalAt(index === -1 ? 0 : index);
+      });
+    });
+
+    if (heroLink) {
+      heroLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        openModalAt(0);
+      });
+    }
+
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => {
+        openModalAt(currentIndex - 1);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        openModalAt(currentIndex + 1);
+      });
+    }
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeModal();
+      if (!modal.classList.contains("is-open")) return;
+      if (event.key === "ArrowLeft") openModalAt(currentIndex - 1);
+      if (event.key === "ArrowRight") openModalAt(currentIndex + 1);
+    });
+  }
 });
+
+// Spotify Iframe API
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+  const element = document.getElementById("spotify-player");
+  if (!element) return;
+
+  const options = {
+    uri: "spotify:playlist:YOUR_PLAYLIST_ID",
+    width: "100%",
+    height: "152", // compact + elegant
+  };
+
+  IFrameAPI.createController(element, options, (controller) => {
+    // Optional: you can control playback here later
+    // controller.play();
+  });
+};
+
+const options = {
+  uri: "spotify:track:",
+  width: "100%",
+  height: "152",
+};
