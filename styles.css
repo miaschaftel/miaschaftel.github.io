@@ -515,6 +515,33 @@ textarea{min-height:140px;resize:vertical}
 }
 .site-footer a:hover{border-bottom-color:rgba(74,143,184,0.55)}
 
+.footer-links{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.footer-ig{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-bottom:none; /* so the icon doesn’t get an underline */
+  padding-bottom:0;
+}
+
+.instagram-icon{
+  width:18px;
+  height:18px;
+  color: rgba(28,42,58,0.82);
+  transition: color 220ms var(--ease), transform 220ms var(--ease);
+}
+
+.footer-ig:hover .instagram-icon{
+  color: var(--accent-red);
+  transform: translateY(-1px);
+}
+
+
 
 /* Spotify embed */
 .spotify-embed {

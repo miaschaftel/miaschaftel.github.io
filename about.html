@@ -29,8 +29,7 @@
         name="twitter:description" />
     <meta content="https://miaschaftel.com/images/about/about-1.jpg" name="twitter:image" />
     <meta content="Mia Schaftel" name="author" />
-    <script
-        type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Mia Schaftel", "url": "https://miaschaftel.com", "jobTitle": "Designer & Photographer", "homeLocation": {"@type": "City", "name": "New York City"}, "sameAs": []}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Mia Schaftel", "url": "https://miaschaftel.com", "jobTitle": "Designer & Photographer", "homeLocation": {"@type": "City", "name": "New York City"}, "sameAs": ["https://www.instagram.com/bymiaschaftel/"]}</script>
 </head>
 
 <body>
@@ -95,7 +94,18 @@
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>© <span id="year"></span> Mia Schaftel · New York City</div>
-            <div><a href="./work.html">See my work →</a></div>
+            <div class="footer-links">
+                <a class="footer-ig" href="https://www.instagram.com/bymiaschaftel/" target="_blank"
+                    rel="noopener noreferrer me" aria-label="Instagram (opens in a new tab)" title="Instagram">
+                    <svg class="instagram-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor"
+                            stroke-width="1.6" />
+                        <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.6" />
+                        <circle cx="17.3" cy="6.7" r="1" fill="currentColor" />
+                    </svg>
+                </a>
+                <a href="./work.html">See my work →</a>
+            </div>
         </div>
     </footer>
     <script src="./main.js"></script>
