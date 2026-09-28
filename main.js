@@ -2,40 +2,7 @@
 window.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("is-loaded");
 
-  // Work filters (only runs if filter UI exists)
-  const chips = document.querySelectorAll("[data-filter]");
-  const items = document.querySelectorAll("[data-tags]");
-
-  if (chips.length && items.length) {
-    const setActive = (activeChip) => {
-      chips.forEach(c => c.classList.toggle("is-active", c === activeChip));
-    };
-
-    const applyFilter = (tag) => {
-      items.forEach(item => {
-        const tags = (item.getAttribute("data-tags") || "")
-          .split(",")
-          .map(t => t.trim().toLowerCase());
-
-        const show = tag === "all" || tags.includes(tag);
-        item.classList.toggle("is-hidden", !show);
-      });
-    };
-
-    chips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        const tag = chip.getAttribute("data-filter");
-        setActive(chip);
-        applyFilter(tag);
-      });
-    });
-
-    // Default
-    const defaultChip = document.querySelector('[data-filter="all"]');
-    if (defaultChip) defaultChip.click();
-  }
-
-  // Subtle page transitions on internal nav clicks
+  // Subtle page transitions on internal nav clicks (skips same-page anchors)
   const internalLinks = document.querySelectorAll('a[href$=".html"]');
   internalLinks.forEach(link => {
     link.addEventListener("click", (e) => {
@@ -52,55 +19,54 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Project modal (gallery + hero; only runs if modal exists)
+  // Gallery lightbox (used on work.html). Each [data-gallery] section is its
+  // own group of photos; clicking one opens the modal scoped to that group.
   const modal = document.getElementById("image-modal");
   if (modal) {
     const modalImg = modal.querySelector("img");
     const closeBtn = modal.querySelector(".close");
-    const galleryLinks = document.querySelectorAll("#gallery .tile");
-    const heroLink = document.querySelector(".project-hero-modal");
     const prevBtn = modal.querySelector(".modal-prev");
     const nextBtn = modal.querySelector(".modal-next");
-    const items = [];
+
+    let currentGroup = [];
     let currentIndex = 0;
 
-    const heroImg = heroLink ? heroLink.querySelector("img") : null;
-    if (heroLink) {
-      items.push({
-        src: heroLink.getAttribute("href"),
-        alt: heroImg ? heroImg.alt : ""
+    document.querySelectorAll("[data-gallery]").forEach((galleryEl) => {
+      const links = Array.from(galleryEl.querySelectorAll("a.tile"));
+      const items = links.map((link) => {
+        const img = link.querySelector("img");
+        return { src: link.getAttribute("href"), alt: img ? img.alt : "" };
       });
-    }
-    galleryLinks.forEach((link) => {
-      const img = link.querySelector("img");
-      items.push({
-        src: link.getAttribute("href"),
-        alt: img ? img.alt : ""
+
+      links.forEach((link, index) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          currentGroup = items;
+          openModalAt(index);
+        });
       });
     });
 
-    const setModalImage = (index) => {
-      if (!modalImg || !items.length) return;
-      const safeIndex = (index + items.length) % items.length;
+    function setModalImage(index) {
+      if (!modalImg || !currentGroup.length) return;
+      const safeIndex = (index + currentGroup.length) % currentGroup.length;
       currentIndex = safeIndex;
-      modalImg.src = items[safeIndex].src;
-      modalImg.alt = items[safeIndex].alt || "";
-    };
+      modalImg.src = currentGroup[safeIndex].src;
+      modalImg.alt = currentGroup[safeIndex].alt || "";
+    }
 
-    const openModalAt = (index) => {
-      if (!items.length) return;
+    function openModalAt(index) {
+      if (!currentGroup.length) return;
       setModalImage(index);
       modal.classList.add("is-open");
       modal.setAttribute("aria-hidden", "false");
       document.body.classList.add("modal-open");
-      if (prevBtn && nextBtn) {
-        const showNav = items.length > 1;
-        prevBtn.style.display = showNav ? "" : "none";
-        nextBtn.style.display = showNav ? "" : "none";
-      }
-    };
+      const showNav = currentGroup.length > 1;
+      if (prevBtn) prevBtn.style.display = showNav ? "" : "none";
+      if (nextBtn) nextBtn.style.display = showNav ? "" : "none";
+    }
 
-    const closeModal = () => {
+    function closeModal() {
       modal.classList.remove("is-open");
       modal.setAttribute("aria-hidden", "true");
       document.body.classList.remove("modal-open");
@@ -108,35 +74,11 @@ window.addEventListener("DOMContentLoaded", () => {
         modalImg.src = "";
         modalImg.alt = "";
       }
-    };
-
-    galleryLinks.forEach((link) => {
-      link.addEventListener("click", (event) => {
-        event.preventDefault();
-        const src = link.getAttribute("href");
-        const index = items.findIndex((item) => item.src === src);
-        openModalAt(index === -1 ? 0 : index);
-      });
-    });
-
-    if (heroLink) {
-      heroLink.addEventListener("click", (event) => {
-        event.preventDefault();
-        openModalAt(0);
-      });
     }
 
     if (closeBtn) closeBtn.addEventListener("click", closeModal);
-    if (prevBtn) {
-      prevBtn.addEventListener("click", () => {
-        openModalAt(currentIndex - 1);
-      });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener("click", () => {
-        openModalAt(currentIndex + 1);
-      });
-    }
+    if (prevBtn) prevBtn.addEventListener("click", () => openModalAt(currentIndex - 1));
+    if (nextBtn) nextBtn.addEventListener("click", () => openModalAt(currentIndex + 1));
     modal.addEventListener("click", (event) => {
       if (event.target === modal) closeModal();
     });
@@ -148,26 +90,3 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
-// Spotify Iframe API
-window.onSpotifyIframeApiReady = (IFrameAPI) => {
-  const element = document.getElementById("spotify-player");
-  if (!element) return;
-
-  const options = {
-    uri: "spotify:playlist:YOUR_PLAYLIST_ID",
-    width: "100%",
-    height: "152", // compact + elegant
-  };
-
-  IFrameAPI.createController(element, options, (controller) => {
-    // Optional: you can control playback here later
-    // controller.play();
-  });
-};
-
-const options = {
-  uri: "spotify:track:",
-  width: "100%",
-  height: "152",
-};

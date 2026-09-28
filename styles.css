@@ -1,7 +1,6 @@
 /* =========================
-   Mia World — Coastal Blue (More Vibrant) + Texture
-   VERSION: 2026-01-10 E
-   FULL OVERWRITE
+   Mia World — Coastal Blue + Texture
+   Simplified: Home / Work / About only
    ========================= */
 
 /* ---- Fonts ---- */
@@ -9,7 +8,6 @@
 @font-face { font-family: "ABC Walter Neue Light"; src: url("fonts/ABCWalterNeue-Light.otf") format("opentype"); font-weight: 300; font-style: normal; }
 @font-face { font-family: "ABC Walter Neue Bold"; src: url("fonts/ABCWalterNeue-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
 @font-face { font-family: "Kamryn"; src: url("fonts/Kamryn.ttf") format("opentype"); font-weight: 700; font-style: normal; }
-
 
 :root{
   --ivory:#F6F1E7;
@@ -24,9 +22,8 @@
   --accent-red: var(--tomato);
   --accent-blue: var(--pool);
 
-  /* Base background */
-  --bg: #EEF3F6;            /* Coastal chalk blue */
-  --bg-deeper: #DCEAF3;     /* slightly richer wash */
+  --bg: #EEF3F6;
+  --bg-deeper: #DCEAF3;
 
   --text: rgba(28,42,58,0.92);
   --muted: rgba(28,42,58,0.68);
@@ -42,7 +39,6 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Reset-ish */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
@@ -54,7 +50,6 @@ body{
   display:flex;
   flex-direction:column;
 
-  /* ✅ MORE VIBRANT BLUE (still airy) */
   background:
     radial-gradient(1050px 720px at 7% -18%, rgba(74,143,184,0.38), transparent 52%),
     radial-gradient(980px 620px at 92% 22%, rgba(242,211,107,0.20), transparent 56%),
@@ -64,7 +59,6 @@ body{
     linear-gradient(0deg, rgba(220,234,243,0.78), rgba(238,243,246,0.92)),
     var(--bg);
 
-  /* Page fade */
   opacity:0;
   transition:opacity 520ms var(--ease);
 }
@@ -76,14 +70,13 @@ img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 ::selection{background:rgba(242,211,107,0.55)}
 
-/* ✅ TEXTURE: visible but tasteful */
 body::before{
   content:"";
   position:fixed;
   inset:0;
   pointer-events:none;
   z-index:9999;
-  opacity:0.05; /* slightly reduced from D so it doesn’t muddy the blues */
+  opacity:0.05;
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
   background-size:320px 320px;
@@ -93,7 +86,7 @@ body::before{
 /* Layout */
 .container{width:min(var(--container),calc(100% - 48px));margin:0 auto}
 .section{padding:84px 0}
-.section--tight{padding:46px 0}
+.section--tight{padding:30px 0}
 .about-main{padding-top:84px}
 
 .hr{
@@ -106,7 +99,7 @@ body::before{
   );
 }
 
-/* ✅ NAV (restored, stable) */
+/* Nav */
 .nav{
   position:sticky;top:0;z-index:100;
   backdrop-filter:blur(14px);
@@ -120,20 +113,14 @@ body::before{
   gap:18px;
   padding:18px 0;
 }
-
-/* Brand (simple + strong) */
 .brand{
   font-family: "Kamryn", sans-serif;
   font-size:54px;
   letter-spacing:0.4px;
-  text-transform:none;
   color:rgba(28,42,58,0.96);
   line-height:1;
 }
-
-.brand:hover {color:#CD5C5C;}
-
-/* Links */
+.brand:hover { color:#CD5C5C; }
 .nav-links{
   display:flex;
   align-items:center;
@@ -186,7 +173,6 @@ body::before{
   filter:saturate(.98) contrast(.98);
   transform:scale(1.03);
 }
-
 .hero-overlay{
   position:absolute;inset:0;
   background:linear-gradient(180deg,
@@ -207,38 +193,7 @@ body::before{
 .h1{font-family:var(--font-sans-strong);font-size:clamp(28px,4vw,32px);letter-spacing:.2px;line-height:1.05;margin:0}
 .subhead{font-size:clamp(16px,2vw,18px);line-height:1.45;margin:0;color:rgba(246,241,231,0.90);max-width:58ch}
 
-/* Project hero (no hover/overlay, rounded like home hero) */
-.project-hero{
-  display:block;
-  border-radius:calc(var(--radius) + 10px);
-  overflow:hidden;
-  box-shadow:var(--shadow);
-  background:#cfdde7;
-}
-.project-hero::after{display:none}
-.project-hero img{
-  width:100%;
-  height:520px;
-  object-fit:cover;
-  filter:saturate(.98) contrast(.98);
-  transform:none;
-}
-.project-hero:hover img{
-  transform:none;
-  filter:saturate(.98) contrast(.98);
-}
-
-/* Project page section spacing */
-.project-page .project-spotify-section{padding-top:20px}
-.project-page .project-hero-section{padding-top:20px}
-.project-page .project-overview-section{padding-top:32px}
-
-/* Project page only: disable tile hover interactions */
-.project-page .tile:hover img{transform:none;filter:none}
-.project-page .tile:hover::after{background:rgba(28,42,58,0)}
-.project-page .tile:hover .tile-title{opacity:0}
-
-/* Project page modal */
+/* Modal (image lightbox) */
 .image-modal{
   position:fixed;
   inset:0;
@@ -316,7 +271,6 @@ body.modal-open{overflow:hidden}
   border:1px solid rgba(246,241,231,0.28);
   color:rgba(246,241,231,0.92);
 }
-
 .btn-secondary{
   background:rgba(28,42,58,0.22);
   border:1px solid rgba(246,241,231,0.28);
@@ -350,11 +304,8 @@ body.modal-open{overflow:hidden}
   height:24px;
 }
 
-/* Home embed: tighten iframe-to-footer gap */
 .home-embed-section{padding-bottom:0}
 .home-main + .site-footer{margin-top:48px}
-
-/* Home tiles: reduce gap from hero */
 .home-tiles{padding-top:48px}
 
 /* Headings & meta */
@@ -369,7 +320,6 @@ body.modal-open{overflow:hidden}
 }
 .meta-row a:hover{border-bottom-color:rgba(74,143,184,0.55)}
 
-
 /* Grids */
 .grid{display:grid;gap:18px}
 .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -380,15 +330,14 @@ body.modal-open{overflow:hidden}
 .about-main{padding-bottom:48px}
 .about-main + .site-footer{margin-top:0}
 
-
 @media (max-width:900px){
   .grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}
   .about-main{padding-top:40px}
   .about-grid{grid-template-columns:1fr}
-  .about-media{order:-1;justify-items:center;grid-column:1 / -1}
+  .about-media{order:-1;justify-items:center;grid-column:1 / -1;height:auto}
   .about-prose{max-width:100%;grid-column:1 / -1}
-  .about-tile--secondary{display:none}
-  .about-tile--primary{width:50%;margin:0 auto;justify-self:center}
+  .about-tile--primary{width:50%;height:auto;margin:0 auto;justify-self:center}
+  .about-tile--primary img{height:400px}
 }
 @media (max-width:640px){
   .grid-2,.grid-3{grid-template-columns:1fr}
@@ -403,13 +352,14 @@ body.modal-open{overflow:hidden}
   .home-main .section--tight{padding-top:30px;padding-bottom:35px}
   .home-tiles{padding-top:32px;padding-bottom:35px}
   .home-main + .site-footer{margin-top:30px}
-  .project-hero img{ height: 360px !important; }
+  .about-tile--primary{width:70%}
+  .about-tile--primary img{height:340px}
 }
 
-/* About layout: make prose column much wider */
+/* About layout: wider prose column */
 .about-grid{grid-template-columns:minmax(0,.75fr) minmax(0,0.3fr)}
 
-/* ✅ Tiles + hover overlays (restored) */
+/* Tiles + hover overlays */
 .tile{
   position:relative;
   border-radius:var(--radius);
@@ -418,11 +368,6 @@ body.modal-open{overflow:hidden}
   box-shadow:0 10px 26px rgba(0,0,0,0.07);
   transform:translateZ(0);
 }
-
-.tile-project-arrow{
-  background:rgba(28,42,58,0.12);
-}
-
 .tile img{
   width:100%;
   height:340px;
@@ -434,8 +379,6 @@ body.modal-open{overflow:hidden}
   transform:scale(1.045);
   filter:saturate(.94) contrast(.92);
 }
-
-/* Sheer overlay */
 .tile::after{
   content:"";
   position:absolute;
@@ -444,8 +387,6 @@ body.modal-open{overflow:hidden}
   transition:background 420ms var(--ease);
 }
 .tile:hover::after{background:rgba(28,42,58,0.36)}
-
-/* Hover title */
 .tile-title{
   position:absolute;
   inset:0;
@@ -453,14 +394,11 @@ body.modal-open{overflow:hidden}
   place-items:center;
   padding:18px;
   opacity:0;
-  transition:none;
   text-align:center;
   color:rgba(246,241,231,0.98);
   pointer-events:none;
 }
-.tile:hover .tile-title{
-  opacity:1;
-}
+.tile:hover .tile-title{opacity:1}
 .tile-title span{
   font-size:15px;
   letter-spacing:.7px;
@@ -473,44 +411,14 @@ body.modal-open{overflow:hidden}
   backdrop-filter:blur(10px);
 }
 
-/* About images */
-.about-img{justify-items:stretch}
-.about-img img{min-height:280px}
+/* Plain gallery tiles (no caption overlay, still lightbox-clickable) */
+.tile.plain img{height:280px}
+
+/* About images: photo column stretches to match the text column's full height */
+.about-media{height:100%}
 .about-tile{max-width:100%;width:100%;justify-self:stretch}
-
-/* Filters */
-.filters{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 22px}
-.chip{
-  border:1px solid rgba(28,42,58,0.16);
-  background:rgba(255,255,255,0.62);
-  border-radius:999px;
-  padding:10px 12px;
-  font-size:12px;
-  letter-spacing:.7px;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:transform 220ms var(--ease), border 220ms var(--ease), background 220ms var(--ease);
-}
-.chip:hover{transform:translateY(-1px);border-color:rgba(74,143,184,0.55)}
-.chip.is-active{border-color:rgba(200,75,58,0.44);background:rgba(200,75,58,0.10)}
-.work-item{transition:opacity 260ms var(--ease), transform 260ms var(--ease)}
-.work-item.is-hidden{opacity:0;transform:translateY(6px);pointer-events:none;position:absolute;visibility:hidden}
-
-/* Form */
-.form{display:grid;gap:12px;max-width:640px}
-input,textarea{
-  width:100%;
-  border-radius:14px;
-  border:1px solid rgba(28,42,58,0.18);
-  background:rgba(255,255,255,0.70);
-  padding:12px;
-  font-family:var(--font-sans);
-  font-size:15px;
-  outline:none;
-  transition:border 220ms var(--ease), transform 220ms var(--ease);
-}
-input:focus,textarea:focus{border-color:rgba(74,143,184,0.55);transform:translateY(-1px)}
-textarea{min-height:140px;resize:vertical}
+.about-tile--primary{height:100%}
+.about-tile--primary img{height:100%;width:100%;object-fit:cover}
 
 /* Footer */
 .site-footer{border-top:1px solid var(--hairline);margin-top:64px}
@@ -529,40 +437,29 @@ textarea{min-height:140px;resize:vertical}
   padding-bottom:2px;
 }
 .site-footer a:hover{border-bottom-color:rgba(74,143,184,0.55)}
-
 .footer-links{
   display:flex;
   align-items:center;
   gap:14px;
 }
-
 .footer-ig{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  border-bottom:none; /* so the icon doesn’t get an underline */
+  border-bottom:none;
   padding-bottom:0;
 }
-
 .instagram-icon{
   width:18px;
   height:18px;
   color: rgba(28,42,58,0.82);
   transition: color 220ms var(--ease), transform 220ms var(--ease);
 }
-
 .footer-ig:hover .instagram-icon{
   color: var(--accent-red);
   transform: translateY(-1px);
 }
 
-
-
 /* Spotify embed */
-.spotify-embed {
-  max-width: 100%;
-}
-
-.spotify-embed iframe {
-  border-radius: 12px;
-}
+.spotify-embed { max-width: 100%; }
+.spotify-embed iframe { border-radius: 18px; }
